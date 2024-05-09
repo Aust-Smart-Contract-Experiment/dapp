@@ -1,0 +1,197 @@
+.rootBio {
+  align-items: flex-start;
+  background: var(--semi-color-bg-0);
+  flex-direction: column;
+  height: 1042px;
+  overflow: hidden;
+  row-gap: 0;
+  width: 1440px;
+  display: flex;
+  font-family: Inter;
+
+  .nav {
+    align-self: stretch;
+    height: 60px;
+
+    .navigationHeaderLogo {
+      align-items: flex-start;
+      column-gap: 0;
+      display: inline-flex;
+      flex-shrink: 0;
+
+      .semiIconsSemiLogo {
+        font-size: 36px;
+        color: var(--semi-color-text-0);
+      }
+    }
+
+    .dIV {
+      align-items: center;
+      column-gap: 16px;
+      display: inline-flex;
+      flex-shrink: 0;
+
+      .semiIconsFeishuLogo,
+      .semiIconsHelpCircle,
+      .semiIconsBell {
+        font-size: 20px;
+        color: var(--semi-color-text-2);
+      }
+
+      .avatar {
+        height: 32px;
+        width: 32px;
+      }
+    }
+  }
+
+  .content {
+    align-items: flex-start;
+    display: flex;
+    flex-basis: 0;
+    flex-direction: column;
+    flex-grow: 1;
+    row-gap: 0;
+    align-self: stretch;
+
+    .banner {
+      align-items: flex-start;
+      display: flex;
+      flex-direction: column;
+      height: 240px;
+      position: relative;
+      row-gap: 10px;
+      width: 1800px;
+      flex-shrink: 0;
+    }
+
+    .profile {
+      align-items: flex-start;
+      column-gap: 0;
+      display: flex;
+      flex-basis: 0;
+      flex-grow: 1;
+      justify-content: center;
+      padding: 48px 0px 0px;
+      position: relative;
+      align-self: stretch;
+
+      .form {
+        align-items: flex-start;
+        display: flex;
+        flex-direction: column;
+        flex-shrink: 0;
+        height: 608px;
+        padding: 0px 0px 0px 60px;
+        row-gap: 48px;
+        width: 684px;
+        z-index: 0;
+        color: var(--semi-color-text-0);
+        font-size: 14px;
+        font-weight: 600;
+        letter-spacing: -0.14px;
+        line-height: 20px;
+        text-align: left;
+
+        .frame1312316522 {
+          align-items: flex-start;
+          display: flex;
+          flex-direction: column;
+          flex-shrink: 0;
+          row-gap: 24px;
+          align-self: stretch;
+
+          .frame1312316520 {
+            align-items: flex-start;
+            column-gap: 24px;
+            display: flex;
+            flex-shrink: 0;
+            align-self: stretch;
+          }
+        }
+
+        .frame1312316523 {
+          align-items: flex-start;
+          display: flex;
+          flex-direction: column;
+          flex-shrink: 0;
+          row-gap: 24px;
+          align-self: stretch;
+
+          .formField5frEnabled {
+            align-items: flex-start;
+            display: flex;
+            flex-direction: column;
+            flex-shrink: 0;
+            row-gap: 4px;
+            align-self: stretch;
+
+            .label {
+              align-items: center;
+              column-gap: 4px;
+              display: inline-flex;
+              overflow: hidden;
+              flex-shrink: 0;
+
+              .portfolio {
+                min-width: 57px;
+                vertical-align: top;
+                flex-shrink: 0;
+              }
+            }
+
+            .upload {
+              align-self: stretch;
+            }
+          }
+        }
+      }
+
+      & > .avatar {
+        align-items: center;
+        display: inline-flex;
+        flex-direction: column;
+        left: 80px;
+        position: absolute;
+        row-gap: 20px;
+        top: -50px;
+        flex-shrink: 0;
+        letter-spacing: -0.6px;
+        text-align: center;
+
+        .avatar {
+          height: 128px;
+          width: 128px;
+        }
+
+        .frame1312316525 {
+          align-items: center;
+          display: inline-flex;
+          flex-direction: column;
+          row-gap: 0;
+          flex-shrink: 0;
+
+          .richardHendricks {
+            color: var(--semi-color-text-0);
+            font-size: 20px;
+            font-weight: 600;
+            line-height: 28px;
+            min-width: 168px;
+            vertical-align: top;
+            flex-shrink: 0;
+          }
+
+          .aRichardHendricks {
+            color: var(--semi-color-text-2);
+            font-size: 12px;
+            font-weight: 400;
+            line-height: 16px;
+            min-width: 112px;
+            vertical-align: top;
+            flex-shrink: 0;
+          }
+        }
+      }
+    }
+  }
+}

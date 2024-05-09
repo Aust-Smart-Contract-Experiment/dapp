@@ -8,7 +8,10 @@ function Home() {
     const [balance, setBalance] = useState();
     const [chainId,setChainId] = useState();
     const [contract, setContract] = useState();
+    const [contract2,setContract2] = useState();
     const [provider,setProvider] = useState();
+    const [blockNumber,setBlockNumber] = useState();
+    const [id,setId] = useState();
 
     const [to,setTo] = useState();
     const[amount,setAmount] = useState();
@@ -23,17 +26,21 @@ function Home() {
         "function setGreeting(string memory _greeting) public",
     ];
 
+
+    //供应链合约的地址和abi
+    const SUPPLY_ADDRESS = "0xb970639804e67bf0b925a6e3f703e9362ab92f59";
+    const SUPPLY_ABI = [
+        "function getProduct(uint _productId) public view returns (string memory, string memory, string memory, string memory, bool)",
+    ];
     //点击按钮的时候登录
     const connectOnclick = async() => {
         if (!window.ethereum) {
            alert("Metamask not installed")
-
            return ;
         }
         //这里使用的是ethers BrowserProvider
         const providerWeb3 =  await new ethers.BrowserProvider(window.ethereum);
         setProvider(providerWeb3);
-
         //获取账户
         const currenAccount = await window.ethereum.request({method: "eth_requestAccounts",});
         setAccount(currenAccount[0]);
@@ -43,25 +50,34 @@ function Home() {
         //获取signer来创建contract实例
         const signer = await providerWeb3.getSigner();
 
+        //合约1
         const contract = await new Contract(MYTOKEN_ADDRESS,MYTOKEN_ABI,signer);
         setContract(contract)
+
+        //合约2
+        const contract2 = await new Contract(SUPPLY_ADDRESS,SUPPLY_ABI,signer);
+        setContract2(contract2)
+
         //获取余额
         const currentBalance = await providerWeb3.getBalance(currenAccount[0]);
-        setBalance(ethers.formatEther(currentBalance));
+     setBalance(ethers.formatEther(currentBalance));
 
-        //切换账号并获取余额
-        window.ethereum.on("accountsChanged", function (accountsChange) {
-            setAccount(accountsChange[0]);
-            providerWeb3.getBalance(accountsChange[0]).then((result) => {
-                setBalance(ethers.formatEther(result))
-            });
-        })
-        //获取chainId
-        const chainId = await window.ethereum.request({method:"eth_chainId"})
-        window.ethereum.on("chainChanged", handleChainChanged);
-        setChainId(chainId)
+     let blockNumber = await providerWeb3.getBlockNumber();
+     setBlockNumber(blockNumber)
 
-    }
+    //切换账号并获取余额
+    window.ethereum.on("accountsChanged", function (accountsChange) {
+        setAccount(accountsChange[0]);
+        providerWeb3.getBalance(accountsChange[0]).then((result) => {
+            setBalance(ethers.formatEther(result))
+        });
+    })
+    //获取chainId
+    const chainId = await window.ethereum.request({method:"eth_chainId"})
+    window.ethereum.on("chainChanged", handleChainChanged);
+    setChainId(chainId)
+
+}
 
     //实现转账功能
     const sendTransaction = async() =>{
@@ -95,6 +111,16 @@ function Home() {
         }
         }
 
+
+    const getProduct = async() =>{
+        try {
+            let products = await contract2.getProduct(id)
+            alert(products)
+        }catch (error){
+            alert(error.message)
+        }
+    }
+
     function handleChainChanged(chainId) {
         window.location.reload();
     }
@@ -113,7 +139,7 @@ function Home() {
             <div className="top">
                 <a href="/" style={{float:"left",color:"#2B333E",textDecoration:"none",fontSize:"28px",borderRadius:"8px"}}>Home</a>
                 <a href="vote" style={{marginLeft:"20px",color:"#2B333E",textDecoration:"none",fontSize:"28px",borderRadius:"8px"}}>Vote</a>
-                <a href="vote_test"style={{marginLeft:"20px",color:"#2B333E",textDecoration:"none",fontSize:"28px",borderRadius:"8px"}}>Test</a>
+                <a href="ChainRaise" style={{marginLeft:"20px",color:"#2B333E",textDecoration:"none",fontSize:"28px",borderRadius:"8px"}}>ChainRaise</a>
                 {account ?
                     <button href="#" style={{ float: 'right' }} >🔐Connected</button>
                     :
@@ -126,6 +152,7 @@ function Home() {
                         <h2 style={{color:"#8ABCD1"}}>Network Type:{chainId}</h2>
                         <h2 style={{color:"#1661AB"}}>Account:{account}</h2>
                         <h2 style={{color:"#1661AB"}}>Balance:{balance}</h2>
+                        <h2 style={{color:"#1661AB"}}>BlockNumber:{blockNumber}</h2>
 
                         <hr/>
 
@@ -161,6 +188,18 @@ function Home() {
                         />
                         <button  onClick={setGreet}>Set The Value</button>
                         <button  onClick={getGreet}>Get The Value</button>
+
+                        <hr/>
+
+                        <h1 id="title" style={{textAlign:'center' ,color:"#bcf1eb"}}>🐏SupplyChain</h1>
+                        <input
+                            type="text"
+                            id="id"
+                            value={id}
+                            onChange={(e) => setId(e.target.value)}
+                            placeholder="Input the ID to get the Products detail"
+                        />
+                        <button  onClick={getProduct}>Get The Products</button>
                         <h4 style={{textAlign:'center',color:"grey"}}>The Greeting Contract Address is <a href="https://www.oklink.com/cn/sepolia-test/address/0x76f5c15b459044542169151f335575f501cf5ec0" style={{textDecoration:"none",color:"lightslategrey"}}>0x76f5c15b459044542169151f335575f501cf5ec0</a></h4>
                         <h5 style={{color:"chocolate",textAlign:'center'}}>Read the doc🦊<a href="https://docs.metamask.io/wallet/">https://docs.metamask.io/wallet/</a></h5>
                         <h5 style={{color:"slateblue",textAlign:'center'}}>Ethers.js v6🍃<a href="https://docs.ethers.org/v6/">https://docs.ethers.org/v6/</a></h5>
